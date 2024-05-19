@@ -14,48 +14,92 @@ public class Main {
 			switch(menu) {
 //		1. CREA UN NUOVO EVENTO
 			case 1:
+		//titolo
 				System.out.println("Titolo evento: ");
 				String titoloEvento = scanner.nextLine();
+		
+		//data
 				LocalDate dataEvento = inputData();
+		
+		//validaz data
 				while(dataEvento.compareTo(LocalDate.now())<0) {
 					System.out.println("Per cortesia, inserire un giorno futuro.");
 					dataEvento = inputData();
 				}
+		
+		//nPostiMax
 				System.out.println("Numero posti totale (inserisci un numero): ");
 				int postiTotali = scanner.nextInt();
 				scanner.nextLine();
+		
+		//validaz posti max
 				while(postiTotali<=0) {
 					System.out.println("Devi inserire un numero di posti totali positivo. Riprova.");
 					postiTotali = scanner.nextInt();
 					scanner.nextLine();
 				}
-				
 				Evento nuovoEvento = new Evento(titoloEvento, dataEvento, postiTotali);
+		//prenotaz posti
 				System.out.println("Vuoi prenotare dei posti? "
 						+ "\nY. Si"
 						+ "\nN. No");
 				String prenotaz = scanner.nextLine();
-		//validaz input
+
+		//validazione input prenotaz		
 				while(!"Y".equals(prenotaz) && !"N".equals(prenotaz)) {
 					System.out.println("Valore non valido.");
 					System.out.println("Vuoi prenotare dei posti? "
 							+ "\nY. Si"
 							+ "\nN. No");
 					prenotaz = scanner.nextLine();
-				}//menu prenotaz
-				
+				}
+		//prenotazione		
 				if(prenotaz.equals("Y")) {
 					System.out.println("Quanti posti vuoi prenotare? (Inserisci un numero) ");
 					int postiDaPrenot = scanner.nextInt();
 					scanner.nextLine();
-					while(postiDaPrenot > nuovoEvento.getnPostiMax()) {
-							System.out.println("Il numero massimo di posti prenotabili e' "
+					while(postiDaPrenot > nuovoEvento.getnPostiMax() || postiDaPrenot < 0) {
+							System.out.println("Valore non valido.\nIl numero massimo di posti prenotabili e' "
 									+ nuovoEvento.getnPostiMax() + ".\nInserisci un altro numero.");
 							postiDaPrenot = scanner.nextInt();
 							scanner.nextLine();
-					}//while
-				}//prenotaz Y
-			
+					}
+					nuovoEvento.setnPostiPrenotati(postiDaPrenot);
+				}
+				System.out.println("Posti prenotati: " + nuovoEvento.getnPostiPrenotati()
+						+ "\nPosti ancora disponibili: " + (nuovoEvento.getnPostiMax() - nuovoEvento.getnPostiPrenotati()));
+			if(nuovoEvento.getnPostiPrenotati() != 0) {
+				System.out.println("Vuoi disdire delle prenotazioni? "
+						+ "\nY. Si"
+						+ "\nN. No");
+				String disdetta = scanner.nextLine();
+				
+		//validazione input disdetta		
+				while(!"Y".equals(disdetta) && !"N".equals(disdetta)) {
+					System.out.println("Valore non valido.");
+					System.out.println("Vuoi disdire delle prenotazioni? "
+							+ "\nY. Si"
+							+ "\nN. No");
+					disdetta = scanner.nextLine();
+				}
+		//disdetta posti
+				if(disdetta.equals("Y")) {
+					System.out.println("Quanti posti vuoi disdire? (Inserisci un numero) ");
+					int postiDaDisdire = scanner.nextInt();
+					scanner.nextLine();
+					while(postiDaDisdire > nuovoEvento.getnPostiPrenotati() || postiDaDisdire < 0){
+						System.out.println("Valore non valido." + "\nPosti prenotati: "
+					+ nuovoEvento.getnPostiPrenotati() + "\nPosti totali: " + nuovoEvento.getnPostiMax() + "\nInserisci un altro numero:");
+						postiDaDisdire = scanner.nextInt();
+						scanner.nextLine();
+					}
+					nuovoEvento.setnPostiPrenotati(nuovoEvento.getnPostiPrenotati() - postiDaDisdire);
+				}
+				System.out.println("Posti prenotati: " + nuovoEvento.getnPostiPrenotati()
+				+ "\nPosti ancora disponibili: " + (nuovoEvento.getnPostiMax() + nuovoEvento.getnPostiPrenotati()));
+			}
+				
+				
 			default: 
 				System.out.println("fine codice");
 				System.out.println("Valore non valido.");
