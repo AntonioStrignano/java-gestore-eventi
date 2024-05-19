@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Evento {
-	private String titolo;
-	private LocalDate data;
+	protected String titolo;
+	protected LocalDate data;
 	private int nPostiMax;
 	private int nPostiPrenotati;
 	

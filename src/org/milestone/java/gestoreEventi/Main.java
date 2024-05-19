@@ -166,8 +166,7 @@ public class Main {
 				 scanner.nextLine();
 			 }
 		 }
-		LocalDate data = LocalDate.of(anno, mese, giorno);
-		return data;
+		return LocalDate.of(anno, mese, giorno);
 	}
 //		/ INPUT DATA
 }
