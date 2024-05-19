@@ -1,14 +1,15 @@
 package org.milestone.java.gestoreEventi;
 
 import java.text.NumberFormat;
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Concerto extends Evento{
-	private LocalDate ora;
+	private LocalTime ora;
 	private double prezzo;
 
-	public Concerto(String titolo, LocalDate data, int nPostiMax, LocalDate ora, double prezzo) {
+	public Concerto(String titolo, LocalDate data, int nPostiMax, LocalTime ora, double prezzo) {
 		super(titolo, data, nPostiMax);
 		this.ora = ora;
 		this.prezzo = prezzo;
@@ -17,7 +18,7 @@ public class Concerto extends Evento{
 	NumberFormat formatter = NumberFormat.getCurrencyInstance();
 	@Override
 	public String toString() {
-		return this.data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")) + "\nTitolo: " + this.titolo + "\nCosto: " + formatter.format(prezzo);
+		return this.data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " " + this.getOra() + "\nTitolo: " + this.titolo + "\nCosto: " + this.getPrezzo();
 	}
 	
 	
@@ -26,7 +27,7 @@ public class Concerto extends Evento{
 		return ora.format(DateTimeFormatter.ofPattern("hh:mm"));
 	}
 
-	public void setOra(LocalDate ora) {
+	public void setOra(LocalTime ora) {
 		this.ora = ora;
 	}
 

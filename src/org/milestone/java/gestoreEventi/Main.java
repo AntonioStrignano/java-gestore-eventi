@@ -1,12 +1,14 @@
 package org.milestone.java.gestoreEventi;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Main {
 //		MAIN
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
+		Evento nuovoEvento;
 
 		int menu;
 		menu = ui();
@@ -38,7 +40,53 @@ public class Main {
 					postiTotali = scanner.nextInt();
 					scanner.nextLine();
 				}
-				Evento nuovoEvento = new Evento(titoloEvento, dataEvento, postiTotali);
+		//Concerto?
+				System.out.println("E' un concerto? "
+						+ "\nY. Si"
+						+ "\nN. No");
+				String isConcerto = scanner.nextLine();
+		//validaz input
+				while(!"Y".equals(isConcerto) && !"N".equals(isConcerto)) {
+					System.out.println("Valore non valido.");
+					System.out.println("Vuoi prenotare dei posti? "
+							+ "\nY. Si"
+							+ "\nN. No");
+					isConcerto = scanner.nextLine();
+				}
+				if(isConcerto.equals("Y")) { 
+					//orario concerto		
+				System.out.println("Orario concerto\nInserisci l'ora (hh): ");
+				int oraConc = scanner.nextInt();
+				scanner.nextLine();
+		//validaz ora
+				while(oraConc>24) {
+					System.out.println("Valore non valido. Inserisci un valore minore di 24");
+					oraConc = scanner.nextInt();
+					scanner.nextLine();
+				}
+				System.out.println("Inserisci i minuti (mm): ");
+				int minConc = scanner.nextInt();
+				scanner.nextLine();
+		//validaz minuti
+				while(minConc > 60) {
+					System.out.println("Valore non valido. Inserisci un valore minore di 60");
+					minConc = scanner.nextInt();
+					scanner.nextLine();
+				}
+				LocalTime orarioConc = LocalTime.of(oraConc, minConc);
+		//prezzo		
+				System.out.println("Prezzo concerto: ");
+				double prezzoConc = scanner.nextDouble();
+				scanner.nextLine();
+		//costruz concerto		
+				nuovoEvento = new Concerto(titoloEvento, dataEvento, postiTotali, orarioConc, prezzoConc);
+				
+				} else {
+					
+		//Costruzione evento !concerto	
+				nuovoEvento = new Evento(titoloEvento, dataEvento, postiTotali);
+				}
+				
 		//prenotaz posti
 				System.out.println("Vuoi prenotare dei posti? "
 						+ "\nY. Si"
@@ -98,10 +146,11 @@ public class Main {
 				System.out.println("Posti prenotati: " + nuovoEvento.getnPostiPrenotati()
 				+ "\nPosti ancora disponibili: " + (nuovoEvento.getnPostiMax() + nuovoEvento.getnPostiPrenotati()));
 			}
-				
+			
+			System.out.println("=====\n" + nuovoEvento.toString());
 				
 			default: 
-				System.out.println("fine codice");
+				System.out.println("=====\nfine codice");
 				System.out.println("Valore non valido.");
 				menu = ui();
 			}
