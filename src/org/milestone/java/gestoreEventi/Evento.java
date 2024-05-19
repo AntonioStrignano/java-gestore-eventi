@@ -1,4 +1,4 @@
-package javaGestoreEventi;
+package org.milestone.java.gestoreEventi;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -55,6 +55,10 @@ public class Evento {
 
 	public int getnPostiPrenotati() {
 		return nPostiPrenotati;
+	}
+
+	public void setnPostiPrenotati(int nPostiPrenotati) {
+		this.nPostiPrenotati = nPostiPrenotati;
 	}
 //		/GETTER E SETTER
 }
