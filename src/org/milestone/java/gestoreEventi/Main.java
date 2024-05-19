@@ -4,19 +4,6 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
-//		USER INTERFACE/MENU
-	public static int ui() {
-		Scanner scanner = new Scanner(System.in);
-		//inizializzo una variabile di transito anziche' utilizzare lo scanner come return per necessita' di inserire
-		//uno scanner nextLine per il problema dell'invio sullo scanner nextInt
-		int menu;
-		System.out.println("\nChe cosa vuoi fare?"
-				+ "\n1. Crea nuovo evento"
-				+ "\n0. Esci");
-		menu = scanner.nextInt();
-		scanner.nextLine();
-		return menu;
-	}
 //		MAIN
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
@@ -30,17 +17,26 @@ public class Main {
 				System.out.println("Titolo evento: ");
 				String titoloEvento = scanner.nextLine();
 				LocalDate dataEvento = inputData();
+				while(dataEvento.compareTo(LocalDate.now())<0) {
+					System.out.println("Per cortesia, inserire un giorno futuro.");
+					dataEvento = inputData();
+				}
 				System.out.println("Numero posti totale (inserisci un numero): ");
 				int postiTotali = scanner.nextInt();
 				scanner.nextLine();
+				while(postiTotali<=0) {
+					System.out.println("Devi inserire un numero di posti totali positivo. Riprova.");
+					postiTotali = scanner.nextInt();
+					scanner.nextLine();
+				}
 				
 				Evento nuovoEvento = new Evento(titoloEvento, dataEvento, postiTotali);
 				System.out.println("Vuoi prenotare dei posti? "
 						+ "\nY. Si"
 						+ "\nN. No");
 				String prenotaz = scanner.nextLine();
-				
-				while(!"Y".equals(prenotaz) || !"N".equals(prenotaz)) {
+		//validaz input
+				while(!"Y".equals(prenotaz) && !"N".equals(prenotaz)) {
 					System.out.println("Valore non valido.");
 					System.out.println("Vuoi prenotare dei posti? "
 							+ "\nY. Si"
@@ -52,23 +48,39 @@ public class Main {
 					System.out.println("Quanti posti vuoi prenotare? (Inserisci un numero) ");
 					int postiDaPrenot = scanner.nextInt();
 					scanner.nextLine();
-					while(postiDaPrenot <= nuovoEvento.getnPostiMax()) {
-						if(postiDaPrenot > nuovoEvento.getnPostiMax()) {
+					while(postiDaPrenot > nuovoEvento.getnPostiMax()) {
 							System.out.println("Il numero massimo di posti prenotabili e' "
 									+ nuovoEvento.getnPostiMax() + ".\nInserisci un altro numero.");
 							postiDaPrenot = scanner.nextInt();
 							scanner.nextLine();
-						}//if
 					}//while
 				}//prenotaz Y
-				
+			
+			default: 
+				System.out.println("fine codice");
+				System.out.println("Valore non valido.");
+				menu = ui();
 			}
 		}
+		System.out.println("Arrivederci!");
 	}
 //		/MAIN
 
+//		USER INTERFACE/MENU
+	public static int ui() {
+		Scanner scanner = new Scanner(System.in);
+		//inizializzo una variabile di transito anziche' utilizzare lo scanner come return per necessita' di inserire
+		//uno scanner nextLine per il problema dell'invio sullo scanner nextInt
+		int menu;
+		System.out.println("\nChe cosa vuoi fare?"
+				+ "\n1. Crea nuovo evento"
+				+ "\n0. Esci");
+		menu = scanner.nextInt();
+		scanner.nextLine();
+		return menu;
+	}
 	
-//		VALIDAZIONE DATA
+//		INPUT DATA
 	public static LocalDate inputData() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Anno evento: ");
@@ -113,5 +125,6 @@ public class Main {
 		LocalDate data = LocalDate.of(anno, mese, giorno);
 		return data;
 	}
+//		/ INPUT DATA
 }
 
