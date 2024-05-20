@@ -169,14 +169,14 @@ public class Main {
 				if(listaEventi.nEventi() != 0) {
 					System.out.println("N. eventi registrati: " + listaEventi.nEventi());
 				int menuLista = uiLista();
-				
+				while(menuLista != 0) {
 				switch(menuLista) {
 // 		2.1 CERCA EVENTI IN DATA
 				case 1: 
 					LocalDate dataCerca = inputData();
 					listaEventi.eventiInData(dataCerca);
 					menuLista = uiLista();
-					break;
+					continue;
 //		2.2 SELEZIONA EVENTO					
 				case 2: 
 					System.out.println("================");
@@ -207,8 +207,9 @@ public class Main {
 						listaEventi.getEventi().get(select - 1).disdici();
 						break;
 					}
-
+					menuLista = uiLista();
 					break;
+
 //		2.3 SVUOTA LISTA
 				case 3:
 					System.out.println("Sei sicuro di voler svuotare la lista di eventi?"
@@ -243,9 +244,14 @@ public class Main {
 						listaEventi.svuotaLista();
 						}
 					}
+					break;
+				default: 
+					System.out.println("Valore non valido.");
 					menuLista = uiLista();
 					break;
-				}}
+				}
+				}
+				}
 				else {
 					System.out.println("La lista è vuota.");
 				}
