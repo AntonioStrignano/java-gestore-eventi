@@ -58,7 +58,7 @@ public class Main {
 				//validaz input
 				while(!"Y".equals(isConcerto) && !"N".equals(isConcerto)) {
 					System.out.println("Valore non valido.");
-					System.out.println("Vuoi prenotare dei posti? "
+					System.out.println("E' un concerto? "
 							+ "\nY. Si"
 							+ "\nN. No");
 					isConcerto = scanner.nextLine();
@@ -242,9 +242,11 @@ public class Main {
 						}
 						if(svuota2.equals("N")) {
 						listaEventi.svuotaLista();
+						menuLista = 0;
+						break;
 						}
+						break;
 					}
-					break;
 				default: 
 					System.out.println("Valore non valido.");
 					menuLista = uiLista();
