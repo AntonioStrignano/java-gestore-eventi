@@ -23,25 +23,26 @@ public class ProgrammEventi {
 	public void eventiInData(LocalDate dataRichiesta) {
 		System.out.println("=====\nEventi presenti in data: " + dataRichiesta.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		for (Evento evento : eventi) {
-			if (evento.data == dataRichiesta) {
-				System.out.println(evento.toString());
+			if (evento.data.equals(dataRichiesta)) {
+				System.out.println("- " + evento.titolo);
 			}
 		}
 	}
 	
-	public void nEventi() {
-		System.out.println("N. eventi registrati: " + eventi.size());
+	public int nEventi() {
+		return eventi.size();
 	}
 	
 	public void svuotaLista() {
 		this.eventi = new ArrayList<Evento>();
+		System.out.println("La lista è stata svuotata con successo.");
 	}
 	
 	public void stampaLista() {
 		Collections.sort(eventi, (a,b)->a.data.compareTo(b.data));
 		int index = 1;
 		for (Evento evento : eventi) {
-			System.out.println(index + ". " + evento.toString());
+			System.out.println(index + ". " + evento.data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " " + evento.getTitolo());
 			index++;
 		}
 	}

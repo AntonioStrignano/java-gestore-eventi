@@ -24,7 +24,7 @@ public class Concerto extends Evento{
 	
 //		GETTER E SETTER
 	public String getOra() {
-		return ora.format(DateTimeFormatter.ofPattern("hh:mm"));
+		return ora.format(DateTimeFormatter.ofPattern("HH:mm"));
 	}
 
 	public void setOra(LocalTime ora) {

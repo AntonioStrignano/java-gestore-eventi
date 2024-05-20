@@ -16,14 +16,23 @@ public class Evento {
 		nPostiPrenotati = 0;
 		}
 
+//costruttore per il testing
+	public Evento(String titolo, LocalDate data, int nPostiMax, int nPostiPrenotati) {
+		this.titolo = titolo;
+		this.data = data;
+		this.nPostiMax = nPostiMax;
+		this.nPostiPrenotati = nPostiPrenotati;
+		}
+
 //		METODI
 	public void prenota() {
-		if(data.isBefore(LocalDate.now())){
+		if(this.data.isBefore(LocalDate.now())){
 			System.out.println("Mi spiace, l'evento è  gia passato.");
-		} else if(nPostiMax == nPostiPrenotati) {
+		} else if(this.nPostiMax == this.nPostiPrenotati) {
 			System.out.println("Mi spiace, non ci sono posti liberi.");
-		} else nPostiPrenotati++;
+		} else { this.nPostiPrenotati++;
 		System.out.println("Il tuo posto è stato prenotato con successo per l'evento " + this.toString());
+		}
 	}
 	
 	public void disdici() {
@@ -31,8 +40,8 @@ public class Evento {
 			System.out.println("Mi spiace, l'evento è  gia passato.");
 		} else if(nPostiPrenotati == 0) {
 			System.out.println("Mi spiace, non ci sono posti gia' prenotati da disdire.");
-		} else  nPostiPrenotati--;
-		System.out.println("Il tuo posto è stato disdetto con successo per l'evento " + this.toString());
+		} else { nPostiPrenotati--;
+		System.out.println("Il tuo posto è stato disdetto con successo per l'evento " + this.toString());}
 	}
 
 	@Override
