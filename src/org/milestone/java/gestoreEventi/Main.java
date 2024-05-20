@@ -9,12 +9,13 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		Evento nuovoEvento;
+		ProgrammEventi listaEventi = new ProgrammEventi("lista");
 
 		int menu;
 		menu = ui();
 		while(menu != 0) {
 			switch(menu) {
-//		1. CREA UN NUOVO EVENTO
+//	1. CREA UN NUOVO EVENTO
 			case 1:
 		//titolo
 				System.out.println("Titolo evento: ");
@@ -23,7 +24,7 @@ public class Main {
 		//data
 				LocalDate dataEvento = inputData();
 		
-		//validaz data
+				//validaz data
 				while(dataEvento.compareTo(LocalDate.now())<0) {
 					System.out.println("Per cortesia, inserire un giorno futuro.");
 					dataEvento = inputData();
@@ -34,7 +35,7 @@ public class Main {
 				int postiTotali = scanner.nextInt();
 				scanner.nextLine();
 		
-		//validaz posti max
+				//validaz posti max
 				while(postiTotali<=0) {
 					System.out.println("Devi inserire un numero di posti totali positivo. Riprova.");
 					postiTotali = scanner.nextInt();
@@ -45,7 +46,7 @@ public class Main {
 						+ "\nY. Si"
 						+ "\nN. No");
 				String isConcerto = scanner.nextLine();
-		//validaz input
+				//validaz input
 				while(!"Y".equals(isConcerto) && !"N".equals(isConcerto)) {
 					System.out.println("Valore non valido.");
 					System.out.println("Vuoi prenotare dei posti? "
@@ -54,11 +55,11 @@ public class Main {
 					isConcerto = scanner.nextLine();
 				}
 				if(isConcerto.equals("Y")) { 
-					//orario concerto		
+		//orario concerto		
 				System.out.println("Orario concerto\nInserisci l'ora (hh): ");
 				int oraConc = scanner.nextInt();
 				scanner.nextLine();
-		//validaz ora
+				//validaz ora
 				while(oraConc>24) {
 					System.out.println("Valore non valido. Inserisci un valore minore di 24");
 					oraConc = scanner.nextInt();
@@ -67,7 +68,7 @@ public class Main {
 				System.out.println("Inserisci i minuti (mm): ");
 				int minConc = scanner.nextInt();
 				scanner.nextLine();
-		//validaz minuti
+				//validaz minuti
 				while(minConc > 60) {
 					System.out.println("Valore non valido. Inserisci un valore minore di 60");
 					minConc = scanner.nextInt();
@@ -93,7 +94,7 @@ public class Main {
 						+ "\nN. No");
 				String prenotaz = scanner.nextLine();
 
-		//validazione input prenotaz		
+				//validazione input prenotaz		
 				while(!"Y".equals(prenotaz) && !"N".equals(prenotaz)) {
 					System.out.println("Valore non valido.");
 					System.out.println("Vuoi prenotare dei posti? "
@@ -116,13 +117,14 @@ public class Main {
 				}
 				System.out.println("Posti prenotati: " + nuovoEvento.getnPostiPrenotati()
 						+ "\nPosti ancora disponibili: " + (nuovoEvento.getnPostiMax() - nuovoEvento.getnPostiPrenotati()));
-			if(nuovoEvento.getnPostiPrenotati() != 0) {
+		//disdetta
+				if(nuovoEvento.getnPostiPrenotati() != 0) {
 				System.out.println("Vuoi disdire delle prenotazioni? "
 						+ "\nY. Si"
 						+ "\nN. No");
 				String disdetta = scanner.nextLine();
 				
-		//validazione input disdetta		
+				//validazione input disdetta		
 				while(!"Y".equals(disdetta) && !"N".equals(disdetta)) {
 					System.out.println("Valore non valido.");
 					System.out.println("Vuoi disdire delle prenotazioni? "
@@ -148,7 +150,13 @@ public class Main {
 			}
 			
 			System.out.println("=====\n" + nuovoEvento.toString());
-				
+			listaEventi.aggiungiEvento(nuovoEvento);
+			System.out.println("L'evento è stato aggiungo in lista correttamente.");
+			
+//	2. LISTA EVENTI
+			
+			
+//		DEFAULT
 			default: 
 				System.out.println("=====\nfine codice");
 				System.out.println("Valore non valido.");
@@ -166,7 +174,8 @@ public class Main {
 		//uno scanner nextLine per il problema dell'invio sullo scanner nextInt
 		int menu;
 		System.out.println("\nChe cosa vuoi fare?"
-				+ "\n1. Crea nuovo evento"
+				+ "\n1. Aggiungi nuovo evento"
+				+ "\n2. Lista eventi"
 				+ "\n0. Esci");
 		menu = scanner.nextInt();
 		scanner.nextLine();
