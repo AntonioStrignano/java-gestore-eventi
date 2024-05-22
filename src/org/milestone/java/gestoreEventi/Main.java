@@ -2,6 +2,7 @@ package org.milestone.java.gestoreEventi;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -57,8 +58,8 @@ public class Main {
 				String isConcerto = scanner.nextLine();
 				//validaz input
 				while(!"Y".equals(isConcerto) && !"N".equals(isConcerto)) {
-					System.out.println("Valore non valido.");
-					System.out.println("E' un concerto? "
+					System.out.println("Valore non valido."
+							+ "\nE' un concerto?"
 							+ "\nY. Si"
 							+ "\nN. No");
 					isConcerto = scanner.nextLine();
@@ -168,6 +169,7 @@ public class Main {
 			case 2:
 				if(listaEventi.nEventi() != 0) {
 					System.out.println("N. eventi registrati: " + listaEventi.nEventi());
+					listaEventi.stampaLista();
 				int menuLista = uiLista();
 				while(menuLista != 0) {
 				switch(menuLista) {
@@ -190,7 +192,9 @@ public class Main {
 						select = scanner.nextInt();
 						scanner.nextLine();
 					}
-					System.out.println("Cosa vuoi fare? "
+					System.out.println("\n+"
+							+ "Hai selezionato:\n" + listaEventi.getEventi().get(select - 1).toString());
+					System.out.println("================\nCosa vuoi fare? "
 							+ "\n1. Prenota"
 							+ "\n2. Disdici");
 					int menuSelect = scanner.nextInt();
@@ -235,7 +239,8 @@ public class Main {
 						//validazione input		
 						while(!"Y".equals(svuota2) && !"N".equals(svuota2)) {
 							System.out.println("Valore non valido.");
-							System.out.println("Sei sicuro di voler svuotare la lista di eventi?"
+							System.out.println("L'azione sarà irreversibile."
+									+ "Vuoi annullare?"
 									+ "\nY. Si"
 									+ "\nN. No");
 							svuota2 = scanner.nextLine();
@@ -307,29 +312,28 @@ public class Main {
 		int anno = scanner.nextInt();
 		scanner.nextLine();
 		System.out.println("Mese evento (in numero): ");
-		int mese = scanner.nextInt();
-		scanner.nextLine();
-		while(mese>12) {
+		String mese = scanner.nextLine();
+		while(Integer.valueOf(mese)>12) {
 			System.out.println("Mese non valido, riprova.");
-			mese = scanner.nextInt();
+			mese = scanner.nextLine();
 			scanner.nextLine();
 		}
 		System.out.println("Giorno evento: ");
 		int giorno = scanner.nextInt();
 		scanner.nextLine();
-		 if(mese == 1 || mese == 3 || mese == 5 || mese == 7 || mese == 8 || mese == 10 || mese == 12) {
+		 if(!Arrays.asList("4", "6", "9", "11").contains(mese)) {
 			 while(giorno>31) {
 				 System.out.println("Giorno inesistente, riprova.");
 				 giorno = scanner.nextInt();
 				 scanner.nextLine();
 			 }
-		 } else if(mese == 2 &&  anno%4==0) {
+		 } else if(mese.equals("2") &&  anno%4==0) {
 			 while(giorno>29) {
 			 System.out.println("Giorno inesistente, riprova.");
 			 giorno = scanner.nextInt();
 			 scanner.nextLine();
 		 }
-		 } else if (mese == 2 && anno%4!=0){
+		 } else if (mese.equals("2") && anno%4!=0){
 			 while(giorno>28) {
 				 System.out.println("Giorno inesistente, riprova.");
 				 giorno = scanner.nextInt();
@@ -342,7 +346,7 @@ public class Main {
 				 scanner.nextLine();
 			 }
 		 }
-		return LocalDate.of(anno, mese, giorno);
+		return LocalDate.of(anno, Integer.valueOf(mese), giorno);
 	}
 //		/ INPUT DATA
 }
